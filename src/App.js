@@ -9,6 +9,9 @@ function App() {
         {/*the above line shows using curly braces to escape into javascript*/}
         <MyButton/>
         <ul>{listItems}</ul>
+        <ButtonWithCount/>
+        <br/>
+        <ButtonWithCount/>
     </div>
   );
 }
@@ -65,9 +68,14 @@ function ButtonWithCount(){
         setCount(count + 1)
     }
 
-    //the first time the button is displayed, count will be 0 because
-    // because you passed
+    //the first time the button is displayed, count will be 0
+    // because you passed 0 to useState()
+    // when you want to change the state, call setCount() and pass
+    // the new value to it
+    // clicking the button will increment the counter
 
+    // ****if you render the same component multiple times
+    // each will get its own state*****
 
     return(
         <button onClick={handleClick}>
