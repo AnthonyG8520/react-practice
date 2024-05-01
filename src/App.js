@@ -1,4 +1,5 @@
 import './App.css';
+import {useState} from "react";
 
 function App() {
   return (
@@ -12,17 +13,67 @@ function App() {
   );
 }
 
+let person = {
+    firstName: "Anthony",
+    lastName: "Gonzales"
+}
+
 // React apps are made out of components.
 // A component is a piece of the UI (user interface) that has its own logic and appearance.
 // A component can be as small as a button, or as large as an entire page.
 // React components must always start with a capital letter while html is always lowercase
 // React components are JavaScript functions that return markup:
 function MyButton() {
+
+//------------------------------------------------------
+    // You can respond to events by declaring event handler
+    // functions inside your components as shown below
+
+    function handleCLick(){
+        alert('You clicked the button')
+    }
+//-------------------------------------
+
     return (
-        <button>
+        // to pass the event handler function to the button
+        // call the onClick attribute and pass in the desired event handler\
+        // notice how 'onClick={handleCLick}' has no parentheses at the end!
+        // you are not calling the event handler - only passing it down
+        // react will call the event handler when the user clicks the button
+        <button onClick={handleCLick}>
             I'm a button
         </button>
     );
+}
+
+function ButtonWithCount(){
+
+    //often, you'll want your compenent to remember some information
+    // and display it. for example, maybe you want to count
+    // the number of times a button is clicked
+    // to do this add state to your component
+
+    const [count,setCount] = useState(0);
+
+    // you'll get 2 things from useState
+    //the current state (count)
+    //and the function that lets you update it (setCount)
+    // you can give them any names but the convention is to write
+    // [something, setSomething]
+
+    function handleClick(){
+        setCount(count + 1)
+    }
+
+    //the first time the button is displayed, count will be 0 because
+    // because you passed
+
+
+    return(
+        <button onClick={handleClick}>
+            CLicked {count} times
+        </button>
+    )
 }
 
 //-------------------------------------------------------
@@ -87,9 +138,7 @@ const listItems = products.map(product=>
 //----------------------------------------------------------------
 
 
-let person = {
-    firstName: "Anthony",
-    lastName: "Gonzales"
-}
+
+
 
 export default App;
