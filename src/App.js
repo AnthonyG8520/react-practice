@@ -2,6 +2,11 @@ import './App.css';
 import {useState} from "react";
 
 function App() {
+    const [count,setCount] = useState(0);
+
+    function handleClick(){
+        setCount(count + 1)
+    }
   return (
     <div className="App">
       <h1>Welcome to my app</h1>
@@ -9,9 +14,9 @@ function App() {
         {/*the above line shows using curly braces to escape into javascript*/}
         <MyButton/>
         <ul>{listItems}</ul>
-        <ButtonWithCount/>
+        <ButtonWithCount count={count} onClick={handleClick}/>
         <br/>
-        <ButtonWithCount/>
+        <ButtonWithCount count={count} onClick={handleClick}/>
     </div>
   );
 }
@@ -49,14 +54,20 @@ function MyButton() {
     );
 }
 
-function ButtonWithCount(){
+function ButtonWithCount({count, onClick}){
+
+    // functions starting with use are called Hooks. Hooks are more
+    // restrictive than other functions. You can only call Hooks at the top
+    // of your components or other Hooks.
+    // If you want to use useState in a condition or a loop
+    // extract a new component and put it there
 
     //often, you'll want your compenent to remember some information
     // and display it. for example, maybe you want to count
     // the number of times a button is clicked
     // to do this add state to your component
 
-    const [count,setCount] = useState(0);
+    // const [count,setCount] = useState(0);
 
     // you'll get 2 things from useState
     //the current state (count)
@@ -64,9 +75,31 @@ function ButtonWithCount(){
     // you can give them any names but the convention is to write
     // [something, setSomething]
 
-    function handleClick(){
-        setCount(count + 1)
-    }
+    //----------GETTING COMPONENTS TO UPDATE TOGETHER
+        // Often you'll need components to share data and
+        // always update together. To make both MyButton components
+        // components display the same count and update together
+        // you need to move the state from the individual buttons 'upwards'
+        // to the closest component containing all of them
+
+        // First move the state up from ButtonWithCount into App
+        // Then pass  the state down from App to each ButtonWithCount
+        // (shown on line 17 and 19)
+        // The information you pass down like this is called 'props'
+        // Now the App component contains the count state and the
+        // handleClick event handler and passes both of them down as props
+        // to each of the buttons.
+        // finally change ButtonWithCount to read the props you have passed
+        // from its parent component (shown on line 112)
+        // you must also pass the 'onClick' and 'count' to the function parameters
+        //
+
+
+    //---------------------------
+
+    // function handleClick(){
+    //     setCount(count + 1)
+    // }
 
     //the first time the button is displayed, count will be 0
     // because you passed 0 to useState()
@@ -78,9 +111,15 @@ function ButtonWithCount(){
     // each will get its own state*****
 
     return(
-        <button onClick={handleClick}>
-            CLicked {count} times
+        <button onClick={onClick}>
+            Clicked {count} times
         </button>
+
+
+
+    //     <button onClick={handleClick}>
+    //         CLicked {count} times
+    //     </button>
     )
 }
 
